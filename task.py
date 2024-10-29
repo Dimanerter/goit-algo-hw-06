@@ -15,7 +15,7 @@ class Phone(Field):
     # реалізація класу
     def __init__(self, value):
         if not self.is_valid_phone(value):
-            print(f"Invalid phone number: {value}")
+            raise ValueError(f"Invalid phone number: {value}")
         super().__init__(value)
     
     def is_valid_phone(self, value):
@@ -35,13 +35,13 @@ class Record:
         if phone:
             self.phones.remove(phone)
         else:
-            raise print(f"Phone number {phone_string} not found")
+            raise ValueError(f"Phone number {phone_string} not found")
 
     def edit_phone(self, old_phone_number, new_phone_number):
         old_phone = self.find_phone(old_phone_number)
         if old_phone:
-            self.remove_phone(old_phone_number)
             self.add_phone(new_phone_number)
+            self.remove_phone(old_phone_number)
         else:
             raise ValueError(f"Phone number {old_phone_number} not found")
 
@@ -80,7 +80,8 @@ john_record = Record("John")
 john_record.add_phone("1234567890")
 john_record.add_phone("5555555555")
 
-# Додавання запису John до адресної книги
+# Додавання запису John до адресної книгиjohn_record.add_phone("5555555555")
+
 book.add_record(john_record)
 
 # Створення та додавання нового запису для Jane
